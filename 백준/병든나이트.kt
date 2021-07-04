@@ -10,7 +10,7 @@ fun main() { // 풀이중
        - 2칸 아래로, 1칸 오른쪽
     */
 
-    if (niteMovingCounts >= 4) {
+    if (niteMovingCount >= 4) {
         // 이동 방법을 모두 한 번씩 사용해야 한다
     } else {
         // 이동 방법에 대한 제약이 없다
