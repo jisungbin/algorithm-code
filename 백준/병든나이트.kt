@@ -15,6 +15,9 @@ fun main() {
 }
 
 
+// 풀이 그림: https://user-images.githubusercontent.com/40740128/124397425-b3469d80-dd4a-11eb-8e48-948cb974d841.png
+
+
 // 풀이 
 // N × M 크기 체스판, 세로 × 가로
 
