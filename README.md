@@ -15,4 +15,4 @@
 한 달 후에도 모르겠으면 다른 분들의 풀이를 참고하여 해결
 
 ### 모르는 문제
-1. [병든 나](https://www.acmicpc.net/problem/1783)
+1. [병든 나이트](https://www.acmicpc.net/problem/1783)
