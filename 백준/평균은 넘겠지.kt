@@ -15,9 +15,7 @@ fun main() {
     val goodStudentsPercentageFormat = DecimalFormat("0.000")
 
     repeat(br.readLine().toInt()) {
-        scores = br.readLine()!!.split(" ").toMutableList().apply {
-            removeFirst()
-        }.map { it.toInt() }
+        scores = br.readLine()!!.split(" ").drop(1).map { it.toInt() }
         avarage = scores.average()
         goodStudentsCount = scores.count { it > avarage }.toDouble()
         goodStudentsPercentage =
