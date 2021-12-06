@@ -2,44 +2,38 @@ import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
-import java.util.StringTokenizer
 
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val bw = BufferedWriter(OutputStreamWriter(System.out))
 
     val ballonsCount = br.readLine()!!.toInt()
-    val ballons = ArrayDeque<Pair<Int, Int>>(ballonsCount)
-    val sb = StringBuilder()
-    val input = StringTokenizer(br.readLine()!!)
-    var number = 0
+    val ballons = ArrayDeque((1..ballonsCount).zip(br.readLine()!!.split(" ").map { it.toInt() }))
+    val punchedBallons = StringBuffer()
 
-    while (input.hasMoreTokens()) {
-        val ballon = ++number to input.nextToken().toInt()
-        ballons.add(ballon)
-    }
+    var ballon: Pair<Int, Int>
+    var ballonNumber: Int
+    var ballonNextIndex: Int
 
-    while (ballons.size != 1) {
-        val ballon = ballons.first()
-        val ballonNumber = ballon.first
-        val ballonNextIndex = ballon.second
-        sb.append("$ballonNumber ")
-
+    while (true) {
+        ballon = ballons.first()
+        ballonNumber = ballon.first
+        ballonNextIndex = ballon.second
+        ballons.removeFirst()
+        punchedBallons.append("$ballonNumber ")
+        if (ballons.isEmpty()) break
         if (ballonNextIndex > 0) {
-            repeat(ballonNextIndex) {
+            repeat(ballonNextIndex - 1) {
                 ballons.addLast(ballons.removeFirst())
             }
-            ballons.remove(ballon)
         } else {
-            ballons.remove(ballon)
-            repeat(ballonNextIndex * -1) {
+            repeat(-ballonNextIndex) {
                 ballons.addFirst(ballons.removeLast())
             }
         }
     }
 
-    sb.append(ballons.first().first)
-    bw.write("$sb")
+    bw.write(punchedBallons.removeSuffix(" ").toString())
 
     br.close()
     bw.flush()
