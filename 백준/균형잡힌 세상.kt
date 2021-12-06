@@ -23,9 +23,9 @@ fun main() {
     val bw = BufferedWriter(OutputStreamWriter(System.out))
 
     while (true) {
-        val texts = br.readLine()!!
-        if (texts != ".") {
-            bw.write("${check(texts)}\n")
+        val text = br.readLine()!!
+        if (text != ".") {
+            bw.write("${check(text)}\n")
         } else {
             break
         }
@@ -36,16 +36,16 @@ fun main() {
     bw.close()
 }
 
-private fun check(texts: String): String {
+private fun check(text: String): String {
     val brackets = ArrayDeque<String>()
-    texts.split("").forEach text@{ text ->
-        if (text.isBracket()) {
-            brackets.addLast(text)
+    text.split("").forEach { char ->
+        if (char.isBracket()) {
+            brackets.addLast(char)
         }
-        if (text.isCloseBracket()) {
+        if (char.isCloseBracket()) {
             brackets.removeLast()
             val lastBracket = brackets.lastOrNull() ?: return "no"
-            val needOpenBracket = text.getOpenBracket()
+            val needOpenBracket = char.getOpenBracket()
             if (lastBracket == needOpenBracket) {
                 brackets.removeLast()
             } else {
