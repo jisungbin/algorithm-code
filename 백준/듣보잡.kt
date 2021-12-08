@@ -1,7 +1,7 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-// a.intersect(b).sorted() 로 중복되는 요소 가져올 수 있음
+// a.intersect(b) 로 중복되는 요소 가져올 수 있음
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val peopleCount = br.readLine()!!.split(" ").sumOf { it.toInt() }
