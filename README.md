@@ -38,6 +38,9 @@
 
 1. [병든 나이트](https://www.acmicpc.net/problem/1783)
 
+# 이해가 안되는 문제
+1. [옥상 정원 꾸미기](https://www.acmicpc.net/problem/6198)
+
 ---
 
 # solved.ac 티어 변동
