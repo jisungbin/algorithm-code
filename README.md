@@ -39,7 +39,8 @@
 1. [병든 나이트](https://www.acmicpc.net/problem/1783)
 
 # 이해가 안되는 문제
-1. [~~옥상 정원 꾸미기~~](https://www.acmicpc.net/problem/6198) 3일만에 드디어 이해 성공!
+
+1. [~~옥상 정원 꾸미기~~](https://www.acmicpc.net/problem/6198) 3일만에 드디어 이해 성공! 🥳
 
 ---
 
