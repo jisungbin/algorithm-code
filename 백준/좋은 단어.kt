@@ -24,7 +24,7 @@ fun main() {
                     wordStack.pop()
                 } else {
                     // 만약 같지 않다면 다음에 올 문자랑 같을 경우를 위해 스택에 넣어줌
-                    // https://scarlettb.tistory.com/18 사진 참고
+                    // 문제 이해는 https://scarlettb.tistory.com/18 사진 참고
                     wordStack.push(word[j])
                 }
             }
