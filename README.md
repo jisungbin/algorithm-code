@@ -39,7 +39,7 @@
 1. [병든 나이트](https://www.acmicpc.net/problem/1783)
 
 # 이해가 안되는 문제
-1. [옥상 정원 꾸미기](https://www.acmicpc.net/problem/6198)
+1. [옥상 정원 꾸미기 (이틀동안 고민해도 왜 풀이가 이렇게 나오는지 이해 못 해서 걍 포기)](https://www.acmicpc.net/problem/6198)
 
 ---
 
