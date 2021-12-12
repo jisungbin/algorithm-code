@@ -12,7 +12,9 @@ private enum class ProblemNumberType {
     SMALL, BIG
 }
 
-private val solvedProblemNumbers = mutableListOf<Int>()
+private data class ProblemInfo(val level: Int, val group: Int)
+
+private val problems = mutableMapOf<Int, ProblemInfo>()
 private val groupedProblemsTree = TreeMap<Int, TreeMap<Int, TreeMap<Int, Int>>>() // <분류 - <난이도 - <문제 번호, 아무값>>>
 private val problemsTree = TreeMap<Int, TreeMap<Int, Int>>() // <난이도 - <문제 번호, 아무값>>
 
@@ -44,8 +46,12 @@ fun main() {
                 )
             }
             "solved" -> {
+                // groupedProblemsTree = <분류 - <난이도 - <문제 번호, 아무값>>>
+                // problemsTree = <난이도 - <문제 번호, 아무값>>
                 val problemNumber = commands[1].toInt()
-                solvedProblemNumbers.add(problemNumber)
+                val problemInfo = problems[problemNumber]!!
+                groupedProblemsTree[problemInfo.group]!![problemInfo.level]!!.remove(problemNumber)
+                problemsTree[problemInfo.level]!!.remove(problemNumber)
             }
             "recommend" -> {
                 val problemGroup = commands[1].toInt()
@@ -100,6 +106,9 @@ private fun updateProblemsTree(problemNumber: Int, problemLevel: Int, problemGro
         // this = <문제 번호, 아무값>>
         this[problemNumber] = 0
     }
+
+    val problemInfo = ProblemInfo(level = problemLevel, group = problemGroup)
+    problems[problemNumber] = problemInfo
 }
 
 // groupedProblemsTree = <분류 - <난이도 - <문제 번호, 아무값>>>
@@ -117,16 +126,10 @@ private fun recommendProblemNumber(group: Int, problemLevelType: ProblemLevelTyp
         groupedProblemsTree[group]!!.remove(problemLevel)
         return recommendProblemNumber(group, problemLevelType)
     }
-    val problemNumber = if (problemLevelType == ProblemLevelType.HARD) {
+    return if (problemLevelType == ProblemLevelType.HARD) {
         problemsTree.lastKey()
     } else {
         problemsTree.firstKey()
-    }
-    return if (solvedProblemNumbers.contains(problemNumber)) { // 이미 풀린 문제
-        groupedProblemsTree[group]!![problemLevel]!!.remove(problemNumber)
-        recommendProblemNumber(group, problemLevelType)
-    } else {
-        problemNumber
     }
 }
 
@@ -144,16 +147,10 @@ private fun recommend2ProblemNumber(problemLevelType: ProblemLevelType): Int {
         problemsTree.remove(problemLevel)
         return recommend2ProblemNumber(problemLevelType)
     }
-    val problemNumber = if (problemLevelType == ProblemLevelType.HARD) {
+    return if (problemLevelType == ProblemLevelType.HARD) {
         problems.lastKey()
     } else {
         problems.firstKey()
-    }
-    return if (solvedProblemNumbers.contains(problemNumber)) { // 이미 풀린 문제
-        problemsTree[problemLevel]!!.remove(problemNumber)
-        recommend2ProblemNumber(problemLevelType)
-    } else {
-        problemNumber
     }
 }
 
@@ -179,16 +176,9 @@ private fun recommend3ProblemNumber(level: Int, problemNumberType: ProblemNumber
         problemsTree.remove(problemLevel) // 없는 난이도 제거 후 함수 함수 돌리기
         return recommend3ProblemNumber(level, problemNumberType)
     }
-    val problemNumber = if (problemNumberType == ProblemNumberType.BIG) { // 문제 번호가 작은 것으로 출력
+    return if (problemNumberType == ProblemNumberType.BIG) { // 문제 번호가 작은 것으로 출력
         problems.firstKey()
     } else { //  문제 번호가 큰 것으로 출력
         problems.lastKey()
-    }
-    return if (solvedProblemNumbers.contains(problemNumber)) { // 이미 풀린 문제 체크
-        problemsTree[problemLevel]!!.remove(problemNumber) // 이미 풀린 문제 제거
-        solvedProblemNumbers.remove(problemNumber)
-        recommend3ProblemNumber(level, problemNumberType) // 이미 풀린 문제 제거 후 다시 돌리기
-    } else {
-        problemNumber
     }
 }
