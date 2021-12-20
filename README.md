@@ -8,6 +8,8 @@
 
 **할 수 이따!!**
 
+[algorithm 공부할거야!](https://github.com/jisungbin/algorithm-study)
+
 # 개인적으로 느낀 팁
 
 0. **시간복잡도 고려하기** <--- 짱짱 중요
