@@ -8,7 +8,7 @@
 
 **할 수 이따!!**
 
-[algorithm 공부할거야!](https://github.com/jisungbin/algorithm-study)
+> [[algorithm 공부할거야!]](https://github.com/jisungbin/algorithm-study) [[코딩테스트 대비 문제집]](https://github.com/jisungbin/baekjoon)
 
 # 개인적으로 느낀 팁
 
