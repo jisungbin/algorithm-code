@@ -23,7 +23,7 @@ fun main() {
 
     fun dfs(nowNode: Int = 1, parentNode: Int = 0) {
         depths[nowNode] = depths[parentNode] + 1 // nowNode의 깊이는 부모 노드의 깊이 + 1 임
-        parents[nowNode][0] = parentNode // 2^1 번째 위에 있는 노드는 항상 부모 노드임
+        parents[nowNode][0] = parentNode // 2^0 번째 위에 있는 노드는 항상 부모 노드임
 
         for (newNode in nodes[nowNode]) {
             if (parentNode != newNode) {
@@ -51,7 +51,8 @@ fun main() {
         if (depths[node] > depths[node2]) {
             node = node2.also { node2 = node }
         }
-        // 이분탐색으로 node와 node2의 깊이가 같게 맞춰줌
+        // node와 node2의 깊이가 같게 맞춰줌
+        // 이 부분 반복문은 순서(downTo 인지 아닌지) 상관 없음
         for (pow in MAX_POW_SIZE downTo 0) {
             val node2Parent = parents[node2][pow]
             // node의 깊이보다 node2의 깊이가 더 깊게 구해지게 만들어 줬으므로,
@@ -60,11 +61,13 @@ fun main() {
                 node2 = node2Parent
             }
         }
-        if (node == node2) { // 만약 2개의 노드가 같다면, 앞에 있는 노드가 lca임
+        if (node == node2) { // 만약 2개의 노드가 같다면, 둘 중 아무 노드나 lca임
             return node
         }
         // 위에서 node와, node2의 깊이를 갚게 맞춰줬으므로
         // node와, node2의 pow 번째 위를 찾아보면서 공통 조상을 찾아야 함
+        // pow가 높을 수록 위에 있는 노드임. 즉 pow가 낮아질수록 점점 깊어짐
+        // 우리는 가장 가까운 조상을 찾아야 하니, 부모가 같은 노드들 중에 **제일 깊은** 노드를 찾아줌
         for (pow in MAX_POW_SIZE downTo 0) {
             val nodeParent = parents[node][pow]
             val node2Parent = parents[node2][pow]
@@ -74,7 +77,7 @@ fun main() {
                 node2 = node2Parent
             }
         }
-        // 마지막엔 nodeParent와 node2Parent가 같은 상태이므로, node의 바로 위에 있는 노드가 lca임
+        // 마지막엔 nodeParent와 node2Parent가 같은 상태이므로, 아무 노드의 바로 위에 있는 노드가 lca임
         return parents[node][0]
     }
 
