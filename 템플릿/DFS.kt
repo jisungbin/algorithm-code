@@ -33,6 +33,8 @@ fun main() {
     bw.close()
 }
 
+// 일케하면 그래프일 때(사이클 있을 때), 무한 재귀 돌아서 stackoverflow 뜸!
+// 아래 방법은 트리일 때(사이클 없을 때)만 가능하고, 그래프일 때는 vis 배열 만들어서 해야 함.
 private fun dfs(nodes: List<List<Int>>, nodesParent: SortedMap<Int, Int>, nowNode: Int, parentNode: Int) {
     // 노드의 시작은 1 이므로, 부모 노드가 0 일땐 부모 노드 저장에서 제외
     if (parentNode != 0) nodesParent[nowNode] = parentNode
