@@ -12,47 +12,31 @@ fun main() {
     val bw = BufferedWriter(OutputStreamWriter(System.out))
 
     val (me, sister) = br.readLine()!!.split(" ").map { it.toInt() }
-    var count = 0
-    val visWithCount = MutableList(MAX) { 0 }
     val bfsQueue: Queue<Int> = LinkedList()
+    val visitTimeAndCount = List(MAX) { mutableListOf(-1, 0) }
 
-    fun bfs() {
-        visWithCount[me] = 1
-        bfsQueue.offer(me)
-        var `break` = false
-        while (bfsQueue.isNotEmpty()) {
-            if (`break`) break
-            val _me = bfsQueue.poll()
-            repeat(3) {
-                var next = _me
-                if (`break`) return@repeat
-                when (it) {
-                    0 -> {
-                        next++
-                    }
-                    1 -> {
-                        next--
-                    }
-                    2 -> {
-                        next *= 2
-                    }
-                }
+    bfsQueue.offer(me)
+    visitTimeAndCount[me][0] = 0 // 방문 시간
+    visitTimeAndCount[me][1] = 1 // 방문 가능한 방법의 수
 
-                if (next == sister) {
-                    count = visWithCount[_me]
-                    `break` = true
-                } else if (next in 0 until MAX && visWithCount[next] == 0) {
+    // sister 에 방문했을 때 멈추는게 아닌, 모든 곳에 다 방문하고 기록함
+    while (bfsQueue.isNotEmpty()) {
+        val _me = bfsQueue.poll()
+        val meVisitTimeAndCount = visitTimeAndCount[_me]
+        for (next in listOf(_me * 2, _me + 1, _me - 1)) {
+            if (next in 0 until MAX) {
+                if (visitTimeAndCount[next][0] == -1) { // 만약 방문한 적이 없다면
                     bfsQueue.offer(next)
-                    visWithCount[next] = visWithCount[_me] + 1
+                    visitTimeAndCount[next][0] = meVisitTimeAndCount[0] + 1
+                    visitTimeAndCount[next][1] = meVisitTimeAndCount[1]
+                } else if (visitTimeAndCount[next][0] == meVisitTimeAndCount[0] + 1) { // 만약 방문한 적이 있다면
+                    visitTimeAndCount[next][1] += meVisitTimeAndCount[1] // 방문 가능한 방법의 수 업데이트
                 }
             }
         }
     }
 
-    if (me != sister) {
-        bfs()
-    }
-    bw.write("$count")
+    bw.write(visitTimeAndCount[sister][0].toString())
 
     br.close()
     bw.flush()
