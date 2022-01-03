@@ -16,7 +16,7 @@ fun main() {
 
     var virusCount = 0
     var wallCount = 0
-    val wallMap = mutableListOf<List<Int>>()
+    val canBuildWallMap = mutableListOf<List<Int>>()
 
     val columnUpper = listOf(1, -1, 0, 0)
     val rowUpper = listOf(0, 0, 1, -1)
@@ -26,7 +26,7 @@ fun main() {
         map[columnIndex] = line.toMutableList()
         repeat(rowSize) { rowIndex ->
             when (line[rowIndex]) {
-                0 -> wallMap.add(listOf(columnIndex, rowIndex)) // 원래 있던 벽 위치 저장
+                0 -> canBuildWallMap.add(listOf(columnIndex, rowIndex)) // 현재 빈 곳이니, 벽 세울 수 있는 위치에 저장
                 1 -> wallCount++
                 2 -> virusCount++
             }
@@ -73,13 +73,13 @@ fun main() {
     var maxSafeAreaCount = 0
 
     // 벽 3개 모든 위치에 세우기 시뮬레이션
-    for (index in 0 until wallMap.size) {
-        for (index2 in index + 1 until wallMap.size) {
-            for (index3 in index2 + 1 until wallMap.size) {
+    for (index in 0 until canBuildWallMap.size) {
+        for (index2 in index + 1 until canBuildWallMap.size) {
+            for (index3 in index2 + 1 until canBuildWallMap.size) {
                 // 세울 수 있는 모든 벽의 위치들
-                val (column, row) = wallMap[index]
-                val (column2, row2) = wallMap[index2]
-                val (column3, row3) = wallMap[index3]
+                val (column, row) = canBuildWallMap[index]
+                val (column2, row2) = canBuildWallMap[index2]
+                val (column3, row3) = canBuildWallMap[index3]
 
                 // 벽 세우기
                 map[column][row] = 1
